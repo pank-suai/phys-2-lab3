@@ -21,7 +21,7 @@
   show figure.where(kind: table): it => {
 
     align(right)[
-      #emph([#it.caption.supplement #it.caption.numbering])
+      #emph([#it.caption.supplement #it.caption.counter.display()])
     ]
     align(center)[
       #strong(it.caption.body)

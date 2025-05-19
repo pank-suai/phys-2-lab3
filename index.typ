@@ -141,7 +141,7 @@ $ <avg>
     ),
     ..res1.flatten(),
     table.cell(colspan: 4)[#align(right, $overline(H_г)$)],
-    [ 11.83 ],
+    [ $11.84 plus.minus 0.22$  ],
   ),
   caption: "Результаты измерений и вычислений горизонтальной составляющей магнитного поля земли",
 )
@@ -155,7 +155,7 @@ $ <avg>
 #figure(
   table(columns: 6, table.header([$U$, В], $alpha_21 ,degree$,
       $alpha_22, degree$, $overline(alpha_2), degree$, $epsilon_0, space ф/м dot 10^(-11)$, $c, space м/c dot 10^8 $), 
-      ..res2.flatten()),
+      ..res2.flatten().map((t)=>{eval(t, mode: "math")})),
   caption: "Результаты измерений и вычислений электрической постоянной и скорости распространения электромагнитных волн ",
 )
 
@@ -163,22 +163,97 @@ $ <avg>
 = Примеры вычислений
 #set math.equation(numbering: none)
 
-$ H_г = (I N) / (2 R tg alpha) = (75 dot 10^(-3)  dot 36) / (2 dot 0.2  dot tg(29.5 degree)) = (2.7 dot 10^(-3) ) / (0.4 "м" dot 0.5664) = 11.93 "А/м" $
+По формуле @hor:
 
-$ epsilon_0 = (2 K R H_г tg alpha') / (N nu epsilon U) = (2 dot 4.5 dot 10^(-7)  dot 0.2 dot 11.83  dot tg(15 degree)) / (36 dot 50  dot 1 dot 5 ) =\ = (2 dot 4.5 dot 10^(-7) dot 0.2 dot 11.83 dot 0.2679) / (36 dot 50 dot 1 dot 5) = 8.54 dot 10^(-12) "Ф/м" $
+$ H_г = (I N) / (2 R tg alpha) = (75 dot 10^(-3)  dot 36) / (2 dot 0.2  dot tg(29.5 degree)) = (2.7 dot 10^(-3) ) / (0.4 dot 0.5664) approx 11.93 space А/м $
 
-$ c = 1 / sqrt(epsilon_0 mu_0) = 1 / sqrt(8.54 dot 10^(-12)  dot 4pi dot 10^(-7) ) = 1 / sqrt(8.54 dot 4pi dot 10^(-19)) = \ = 1 / sqrt(1.07 dot 10^(-18)) = 1 / 3.27 dot 10^(-10) = 3.06 dot 10^8 "м/с" $
+По формуле @eps:
+
+$ epsilon_0 = (2 K R H_г tg alpha') / (N nu epsilon U) = (2 dot 4.5 dot 10^(-7)  dot 0.2 dot 11.83  dot tg(15 degree)) / (36 dot 50  dot 1 dot 5 ) =\ = (2 dot 4.5 dot 10^(-7) dot 0.2 dot 11.83 dot 0.2679) / (36 dot 50 dot 1 dot 5) approx 8.54 dot 10^(-12) "Ф/м" $
+
+По формуле @c:
+
+$ c = 1 / sqrt(epsilon_0 mu_0) = 1 / sqrt(8.54 dot 10^(-12)  dot 4pi dot 10^(-7) ) = 1 / sqrt(8.54 dot 4pi dot 10^(-19)) = \ = 1 / sqrt(1.07 dot 10^(-18)) = 1 / 3.27 dot 10^(-10) approx 3.06 dot 10^8 "м/с" $
+
+По формуле @avg:
+
+$
+  overline(H_"г") = (11.93 + 11.79 + 11.79) / (3) approx 11.83 space A/м
+$
 
 = Вычисление погрешностей
 #set math.equation(numbering: "(1)")
 
-
-
 == Систематическая погрешность
+
+Для вычисления систематической погрешности горизонтальной составляющей напряженности магнитного поля Земли использовалась формула @thetaH:
+
+$
+  theta_H_г = overline(H_г) dot (2 theta_alpha / sin(2alpha) + (theta I )/ I)
+$ <thetaH>
+
+
+Вычисление погрешности:
+
+#set math.equation(numbering: none)
+
+
+$
+  theta_H_г = 11.84 dot ( (1 degree) / sin(70 degree) + (0.002 )/ 95) approx 0.22 space A/м
+$
+
+Для вычисления электрической постоянной $epsilon_0$ использовалась формула @thetaEpsilon:
+
+#set math.equation(numbering: "(1)")
+
+$
+  theta_epsilon_0 = epsilon_0 (theta_H_г/H_г + theta_alpha/alpha + theta_U/U)
+
+$ <thetaEpsilon>
+
+#set math.equation(numbering: none)
+
+Вычисление погрешности:
+
+$
+  theta_epsilon_0 = 1.05 dot 10^(-11) dot (0.22/11.84 + (0.5 degree)/(6 degree) + 0.375/12) approx 0.05 dot 10^(-11)
+$
+
+Для вычисления распространения скорости распространения электромагнитных волн в вакууме использовалась формула @thetaC:
+
+#set math.equation(numbering: "(1)")
+
+$
+  theta_c = c (theta_epsilon_0/epsilon_0)
+$ <thetaC>
+
+#set math.equation(numbering: none)
+
+Вычисление погрешности: 
+
+$
+  theta_c = 2.75 ((0.05 dot 10^(-11))/1.05) approx 0.14 dot 10^8
+$
+
 
 == Случайная погрешность
 
 === Среднеквадратичное отклонение
+
+$
+  S_overline(H_г) = sqrt(sum^N_(i = 1)(overline(H_г)-H_i)^2/N(N-1)) = sqrt(((11.84 - 11.93)^2 + 2(11.84-11.79)^2 )/(3 dot 2)) approx 0.05
+$
+$
+  S_overline(H_г) << theta_H_г
+$
+
+
+Среднеквадратичное отклонение значительно меньше систематической погрешности, что может говорить о корректном снятие значений с прибора.
+
+$
+  Delta_(H_г) = theta_(H_г)
+$
+
 
 = Вывод
 
